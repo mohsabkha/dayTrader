@@ -15,6 +15,8 @@ import requests as req
 #PURPOSE: to return the date in a format recognized by the dataframe
 #ARGS: n/a
 #RETURNS: string
+#NOTE: Currently, this should only run when market is closed
+#TO-DO: Add functionality that will get hour by hour data
 ####################################################################
 def get_date():
     #set up start and end dates of query (end day will be today, start day will be yesterday)
@@ -33,6 +35,8 @@ def get_date():
 #PURPOSE: to compile a dataframe of all stocks in the chosen market
 #ARGS: string
 #RETURNS: pandas dataframe, pandas dataframe
+#NOTE: this currently only has access to two groups of market (SP500 and NASDAQ)
+#TO-DO: add functionality that allows access to different types of markets and tickers
 ####################################################################
 def get_tickers(code):
     # First, create filter to remove NaN values to avoid them being calculated before trade day ends
@@ -57,6 +61,8 @@ def get_tickers(code):
 #PURPOSE: to return a list of filtered stocks that should give a minimum 1% return per day
 #ARGS: pandas dataframe, pandas dataframe
 #RETURNS: pandas dataframe
+#NOTE: The list is still unstable due to lack of volatility analysis and lack of expert analysis reading
+#TO-DO: add functionality that will auto-read expert analysis and will measure volatility (more volatile = better chance of upwards movement)
 ####################################################################
 def get_recommendations(volume, closing):
     closing_time = get_date()
