@@ -1,0 +1,2 @@
+# dayTrader
+day trading algorithm
