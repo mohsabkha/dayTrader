@@ -29,6 +29,8 @@
 		polygon provides this in one api call
 
 
+## Phases
+
 ### Phase 1: (based on volume, price, and averages of each)
     get correct historic data
     implement vwap strat
