@@ -1,0 +1,1 @@
+from dayTrader.screener import screener_config
