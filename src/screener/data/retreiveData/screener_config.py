@@ -1,6 +1,8 @@
 from .get_date import get_date
 
 KEY = 'wN0pWKqQfTzBAfIOvCWf3v6iZBpr5otL'
+ALPACA_KEY = 'PKM6MR6GJO5BAZ1H99J0'
+ALPACA_SECRET_KEY = 'tkYetTY8oZEZoCHv66QfOmMFI4lG6N731wQX13j7'
 #POLYGON_URL = 'https://api.polygon.io'
 POLYGON_TICKER_URL = 'https://api.polygon.io/v2/reference/tickers?page={}&apiKey={}'#page,key
 POLYGON_AGGS_URL = 'https://api.polygon.io/v2/aggs/ticker/{}/range/1/day/{}/{}?unadjusted=true&apiKey={}'#ticker,start,end,key
