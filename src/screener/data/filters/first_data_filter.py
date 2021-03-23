@@ -1,4 +1,3 @@
-
 ####################################################################
 #PURPOSE: to filter out the useless stocks using volume traded and price
 #ARGS: list of data containing ticker symbols

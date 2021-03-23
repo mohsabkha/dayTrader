@@ -1,5 +1,5 @@
 #make sure you create this file based on sample_screener_config.py
-from screener.data.retreiveData.screener_config import TICKER_PAGE_PATH, END, ALPACA_KEY
+from screener.data.retreiveData.screener_config import TICKER_PAGE_PATH, END
 
 from screener.data.retreiveData.tickers.get_tickers import get_tickers
 from screener.data.retreiveData.tickers.combine_tickers import combine_tickers

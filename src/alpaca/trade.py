@@ -5,7 +5,7 @@ import alpaca_trade_api as tradeapi
 import time
 from alpaca_trade_api.rest import TimeFrame
 from alpaca_trade_api.rest import APIError
-from config import *  # should use env variables or add config to the git ignore
+from ...config import *  # should use env variables or add config to the git ignore
 
 listOfAlpacaAccounts = []
 gonzalo = {'apiKey': APCA_API_KEY_ID_GONZALO,

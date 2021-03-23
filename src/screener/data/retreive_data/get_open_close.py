@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 import time
 import matplotlib.pyplot as plt
 #make sure you create this file based on sample_screener_config.py
-from .screener_config import POLYGON_OPEN_CLOSE_URL, END, KEY
+from .....config import POLYGON_OPEN_CLOSE_URL, END, KEY
 
     
 ####################################################################

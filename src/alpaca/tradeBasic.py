@@ -1,6 +1,6 @@
 import requests
 import json
-from config import *
+from ...config import *
 
 
 ACCOUNT_URL = "{}/v2/account".format(APCA_API_BASE_URL_PAPER)
