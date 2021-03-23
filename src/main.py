@@ -1,14 +1,14 @@
 #make sure you create this file based on sample_screener_config.py
-from screener.data.retreiveData.screener_config import TICKER_PAGE_PATH, END
+from config import TICKER_PAGE_PATH, END
 
-from screener.data.retreiveData.tickers.get_tickers import get_tickers
-from screener.data.retreiveData.tickers.combine_tickers import combine_tickers
-from screener.data.retreiveData.get_open_close import get_open_close
-from screener.data.retreiveData.get_minute_bars import get_minute_bars
-from screener.data.retreiveData.get_daily_bars import get_daily_bars
-from screener.data.filters.filter_us_stocks import filter_us_stocks
-from screener.data.filters.first_data_filter import first_data_filter
-from screener.data.filters.second_data_filter import second_data_filter
+from screener.retreive_data.ticker_functions.get_tickers import get_tickers
+from screener.retreive_data.ticker_functions.combine_tickers import combine_tickers
+from screener.retreive_data.get_open_close import get_open_close
+from screener.retreive_data.get_minute_bars import get_minute_bars
+from screener.retreive_data.get_daily_bars import get_daily_bars
+from screener.filters.filter_us_stocks import filter_us_stocks
+from screener.filters.first_data_filter import first_data_filter
+from screener.filters.second_data_filter import second_data_filter
 from alpaca.condition_data import condition_data
 
 import pandas as pd
@@ -32,7 +32,7 @@ def main():
     datetime.now().strftime('%H:%M:%S')
     print(':::::::::::::::::::ENTERING COMBINE TICKERS - ',datetime.now().strftime('%H:%M:%S'))
     #store ticker data into symbols
-    symbols = combine_tickers('data/tickers')
+    symbols = combine_tickers('polygon_data/tickers')
     #combine tickers will create csv files, read those csv files into polygon_tickers with 
     #symbols variable as backup
     polygon_tickers = pd.read_csv('polygon_tickers.csv')
@@ -44,9 +44,6 @@ def main():
     #symbols variable
     print(':::::::::::::::::::ENTERING FILTER US STOCKS',datetime.now().strftime('%H:%M:%S'))
     symbols = filter_us_stocks(polygon_tickers)
-
-
-
 
     ######################################################### Phase 2 - get data
     #returns end of day data for symbols
@@ -119,6 +116,7 @@ def main():
 
 
 if __name__ == "__main__":
+    #to run this using python main.py, remember to use this commaned in terminal before running: export PYTHONPATH="$PWD/src"
     main()
     
     
