@@ -1,1 +1,5 @@
 config.py
+screener_config.py
+polygon_tickers_us.csv
+polygon_tickers.csv
+src/data/tickers/*
