@@ -1,4 +1,5 @@
-
+import pandas as pd
+import os
 ####################################################################
 #PURPOSE: extract individual tickers from pages
 #ARGS: directory where pages of tickers are stored

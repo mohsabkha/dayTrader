@@ -1,4 +1,6 @@
+#make sure you create this file based on sample_screener_config.py
 from screener.data.retreiveData.screener_config import TICKER_PAGE_PATH, END
+
 from screener.data.retreiveData.tickers.get_tickers import get_tickers
 from screener.data.retreiveData.tickers.combine_tickers import combine_tickers
 from screener.data.retreiveData.get_open_close import get_open_close
@@ -109,8 +111,11 @@ def main():
     del path
     del now
 
+    print('\n\n\n:::::::::::::::::::Top Stocks Based On Score')
     print(my_score_list)
+    print('\n\n\n:::::::::::::::::::Top Stocks Based On Highest Volume')
     print(my_volume_list_best)
+    print('\n\n\n:::::::::::::::::::Top Stocks Based On Lowest Volume')
     print(my_volume_list_worst)
 
     ######################################################### Phase 4 - get live data and feed into strat
@@ -123,5 +128,8 @@ def main():
         #to buy the stock at that time with take profit and stop loss built in
         #break out of loop / end socket connection
         #run_connection()
+
+if __name__ == "__main__":
+    main()
     
     

@@ -1,3 +1,8 @@
+#make sure you create this file based on sample_screener_config.py
+from ..screener_config import POLYGON_TICKER_URL, KEY
+import requests
+import math
+import pandas as pd
 ####################################################################
 #PURPOSE: Get tickers from polygon.io
 #ARGS: url
