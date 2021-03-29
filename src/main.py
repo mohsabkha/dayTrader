@@ -100,7 +100,7 @@ def main():
     print(my_score_list)
     print('\n\n\n:::::::::::::::::::Top Stocks Based On Highest Volume')
     print(my_volume_list_best)
-    print(':::::::::::::::::::CONDTIONING DATA FOR ALPACA')
+    print('\n\n\n:::::::::::::::::::CONDTIONING DATA FOR ALPACA')
     alpaca_top_five = condition_data(my_score_list)
     #experiment 1 - buy the top stock at 8:31
     #experiment 2 - buy the top 5 stocks at 8:31
@@ -116,7 +116,9 @@ def main():
     websocket_symbols, websocket_ticker_data, ic_data = strat_list(stock_score)
 
     def entry_to_strats(message):
-        strats(message=message, websocket_ticker_data=websocket_ticker_data, ic_data=ic_data)
+        print(':::::::::::::::::::ENTERED STRATS')
+        print(message)
+        strats(message, websocket_ticker_data, ic_data)
 
     print(':::::::::::::::::::OPENING WEBSOCKET')
     my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
@@ -125,7 +127,9 @@ def main():
     print(':::::::::::::::::::SUBSCRIBING TO STOCKS IN WEBSOCKET')
     for ticker in websocket_symbols:
         my_client.subscribe(ticker)
+
     time.sleep(600)
+    print(':::::::::::::::::::CLOSING WEBSOCKET')
     my_client.close_connection()
 if __name__ == "__main__":
     #to run this using python main.py, remember to use this commaned in terminal before running: export PYTHONPATH="$PWD/src"
