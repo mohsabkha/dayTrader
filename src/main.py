@@ -10,10 +10,15 @@ from screener.filters.filter_us_stocks import filter_us_stocks
 from screener.filters.first_data_filter import first_data_filter
 from screener.filters.second_data_filter import second_data_filter
 from alpaca.condition_data import condition_data
+from strategies.strats import strats
+from strategies.strats import strat_list
+
 
 import pandas as pd
 import numpy as np
 from datetime import datetime
+import time
+from polygon import WebSocketClient, STOCKS_CLUSTER
 import os
 
 def main():
@@ -108,7 +113,7 @@ def main():
     #       ic_strat() and vwap_strat return true or false; 
     # strats() then calls alpaca if conditions are true
     websocket_symbols, websocket_ticker_data, ic_data = strat_list(stock_score)
-    my_client = WebSocketClient(STOCKS_CLUSTER, KEY, strats(websocket_ticker_data=websocket_ticker_data, ic_data=ic_data))
+    my_client = WebSocketClient(STOCKS_CLUSTER, KEY, strats(websocket_ticker_data=websocket_ticker_data, ic_data=ic_data, my_client))
     my_client.run_async()
     for ticker in websocket_symbols:
         my_client.subscribe(ticker)

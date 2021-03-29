@@ -1,4 +1,8 @@
-def strats(message, websocket_ticker_data, ic_data):
+from .ic_indicator import ic_indicator
+from .vwap_indicator import vwap_indicator
+
+
+def strats(message, websocket_ticker_data, ic_data, my_client):
     print(message)
     for update in message:
         for x in range(len(websocket_ticker_data)) :
