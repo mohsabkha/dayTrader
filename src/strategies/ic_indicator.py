@@ -10,7 +10,7 @@ def ic_indicator(ticker_values, ic_data):
     #lead span b is the 52 period high + the 52 period low / 2
     ic_data['lead_B'].append((ticker_values['high'].rolling(window=52).max() + 
                               ticker_values['low'].rolling(window=52).min())/2)
-    #the lagging span is the past
+    #the lagging span is 26 periods in the past
     ic_data['lag_span'].append(ticker_values['close'][-1])
     #series of checks
     if(len(ic_data['lead_A']) > 53):
