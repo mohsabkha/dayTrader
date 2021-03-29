@@ -11,7 +11,8 @@ def second_data_filter(filtered_symbols, minute_data, data):
     recommendation_list={
         'Stock':[], 
         'Score':[], 
-        'Volume':[], 
+        'Volume':[],
+        'VWAP': [],
         'Closing Price':[], 
         'LowerBound':[]
     }
@@ -22,6 +23,8 @@ def second_data_filter(filtered_symbols, minute_data, data):
         if((percent_gained_after_market*100) > 2.0):
             #set up lower bollinger band for long buys
             closing = minute_data[minute_data['symbol'] == ticker]
+
+            vwap = minute_data[minute_data['symbol'] == ticker]
             #closing.set_index('date', inplace=True)
             lowerBound = closing['close'].rolling(window=26).mean() - 2*closing['close'].rolling(window=26).std()
             #check if the afterhours close went below bollinger band
@@ -38,4 +41,5 @@ def second_data_filter(filtered_symbols, minute_data, data):
                 recommendation_list['Closing Price'].append(data['close'][ticker])
                 recommendation_list['Score'].append(((data['close'][ticker] - lowerBound['close'].iloc[-1])/data['close'][ticker])*100)
                 recommendation_list['Volume'].append(data['volume'][ticker])
+                recommendation_list['VWAP'].append(vwap['weighted volume'].iloc[-1])
     return recommendation_list

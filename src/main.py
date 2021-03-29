@@ -45,6 +45,7 @@ def main():
     print(':::::::::::::::::::ENTERING FILTER US STOCKS',datetime.now().strftime('%H:%M:%S'))
     symbols = filter_us_stocks(polygon_tickers)
 
+
     ######################################################### Phase 2 - get data
     #returns end of day data for symbols
     print(':::::::::::::::::::ENTERING GET OPEN CLOSE',datetime.now().strftime('%H:%M:%S'))
@@ -56,7 +57,7 @@ def main():
     filtered_data = first_data_filter(data)
     #retrieves minute data for symbols that met criteria
     print(':::::::::::::::::::ENTERING GET MINUTE BARS - ',datetime.now().strftime('%H:%M:%S'))
-    minute_data = get_minute_bars(first_filter=filtered_data, date='2021-03-15')
+    minute_data = get_minute_bars(first_filter=filtered_data, date=END)
     almost_clean_data = pd.DataFrame(minute_data)
     almost_clean_data = almost_clean_data.reindex(index=almost_clean_data.index[::-1])
     #use daily open close rates for each ticker and convert it to dataframe
@@ -68,8 +69,6 @@ def main():
     recommendation_list = pd.DataFrame(recommendation_list)
     #print date to ensure that correct date is being used
     print(':::::::::::::::::::The following data is being taken from this date: ', END)
-
-
 
 
     ######################################################### Phase 3 - organize filtered data
@@ -96,23 +95,24 @@ def main():
     print(my_score_list)
     print('\n\n\n:::::::::::::::::::Top Stocks Based On Highest Volume')
     print(my_volume_list_best)
-    my_score_list = condition_data(my_score_list)
-
+ 
 
     ######################################################### Phase 4 - get live data and feed into strat
-    #loop/websocket for live feed    
-        #ic_indicator_strat(data)
-            #feed live data into the function and get analysis on when you should buy
-        #vwap_indicator_strat(data)
-            #feed live data into the function and get analysis on when you should buy
-        #if vwap and ic are both true, trigger alpaca 
-        #to buy the stock at that time with take profit and stop loss built in
-        #break out of loop / end socket connection
-        #run_connection()
+    stock_score = my_score_list.set_index('Stock')
+    alpaca_top_five = condition_data(my_score_list)
+
+    # websocket client calls strats(); 
+    # strats() calls ic_strat() and vwap_strat; 
+    #       ic_strat() and vwap_strat return true or false; 
+    # strats() then calls alpaca if conditions are true
+    websocket_symbols, websocket_ticker_data, ic_data = strat_list(stock_score)
+    my_client = WebSocketClient(STOCKS_CLUSTER, KEY, strats(websocket_ticker_data=websocket_ticker_data, ic_data=ic_data))
+    my_client.run_async()
+    for ticker in websocket_symbols:
+        my_client.subscribe(ticker)
 
 
-
-     ######################################################### Phase 5 - Take conditioned data and call alpaca to buy
+    ######################################################### Phase 5 - Take conditioned data and call alpaca to buy
 
 
 if __name__ == "__main__":
