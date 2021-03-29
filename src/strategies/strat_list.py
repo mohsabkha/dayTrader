@@ -10,7 +10,7 @@ def strat_list(stock_data):
     ]
     websocket_symbols = []
     count = 0
-    for ticker in stock_score.index:
+    for ticker in stock_data.index:
         websocket_symbols.append(f'A.{ticker}')
         websocket_ticker_data[count]['sym'].append(ticker)
         count += 1

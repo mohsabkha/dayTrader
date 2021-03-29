@@ -1,4 +1,5 @@
 def ic_indicator(ticker_values, ic_data):
+    print(':::::::::::::::::::ENTERING IC INDICATOR')
     #conversion line takes 9 period high + 9 period low / 2
     ic_data['conversion_line'].append((ticker_values['high'].rolling(window=9).max() + 
                                        ticker_values['low'].rolling(window=9).min())/2)
@@ -28,8 +29,9 @@ def ic_indicator(ticker_values, ic_data):
         #check if all conditions are true in order to buy
         if(flag1 and flag2 and flag3 and flag4 and flag5 and flag6 and flag7):
             # TO-DO : set profit loss/gain here and return it
+            print(':::::::::::::::::::IC INDICATOR RETURNED TRUE')
             return True
         else:
             return False
-    else: 
+    else:
         return False

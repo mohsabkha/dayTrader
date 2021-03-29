@@ -1,5 +1,5 @@
-#make sure you create this file based on sample_screener_config.py
-from config import TICKER_PAGE_PATH, END
+#make sure you create this file based on config_example.py
+from config import TICKER_PAGE_PATH, END, KEY
 
 from screener.retreive_data.ticker_functions.get_tickers import get_tickers
 from screener.retreive_data.ticker_functions.combine_tickers import combine_tickers
@@ -11,7 +11,7 @@ from screener.filters.first_data_filter import first_data_filter
 from screener.filters.second_data_filter import second_data_filter
 from alpaca.condition_data import condition_data
 from strategies.strats import strats
-from strategies.strats import strat_list
+from strategies.strat_list import strat_list
 
 
 import pandas as pd
@@ -78,8 +78,8 @@ def main():
 
     ######################################################### Phase 3 - organize filtered data
     #sort data by certain values
-    my_volume_list_best = recommendation_list.sort_values(by='Volume').tail(10)
-    my_score_list = recommendation_list.sort_values(by='Score').head(10)
+    my_volume_list_best = recommendation_list.sort_values(by='Volume').tail(5)
+    my_score_list = recommendation_list.sort_values(by='Score').head(5)
     #print time to see how long it took to complete process
     now = datetime.now().strftime('%H:%M:%S')
     print(':::::::::::::::::::END TIME IS ', now)
@@ -100,24 +100,33 @@ def main():
     print(my_score_list)
     print('\n\n\n:::::::::::::::::::Top Stocks Based On Highest Volume')
     print(my_volume_list_best)
-
+    print(':::::::::::::::::::CONDTIONING DATA FOR ALPACA')
     alpaca_top_five = condition_data(my_score_list)
     #experiment 1 - buy the top stock at 8:31
     #experiment 2 - buy the top 5 stocks at 8:31
 
 
     ######################################################### Phase 4 - get live data and feed into strat for experiments 3-5
+    print(':::::::::::::::::::CONDTIONING DATA FOR WEBSOCKET')
     stock_score = my_score_list.set_index('Stock')
     # websocket client calls strats(); 
     # strats() calls ic_strat() and vwap_strat; 
     #       ic_strat() and vwap_strat return true or false; 
     # strats() then calls alpaca if conditions are true
     websocket_symbols, websocket_ticker_data, ic_data = strat_list(stock_score)
-    my_client = WebSocketClient(STOCKS_CLUSTER, KEY, strats(websocket_ticker_data=websocket_ticker_data, ic_data=ic_data, my_client))
+
+    def entry_to_strats(message):
+        strats(message=message, websocket_ticker_data=websocket_ticker_data, ic_data=ic_data)
+
+    print(':::::::::::::::::::OPENING WEBSOCKET')
+    my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
+   
     my_client.run_async()
+    print(':::::::::::::::::::SUBSCRIBING TO STOCKS IN WEBSOCKET')
     for ticker in websocket_symbols:
         my_client.subscribe(ticker)
-
+    time.sleep(600)
+    my_client.close_connection()
 if __name__ == "__main__":
     #to run this using python main.py, remember to use this commaned in terminal before running: export PYTHONPATH="$PWD/src"
     main()
