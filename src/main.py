@@ -95,12 +95,14 @@ def main():
     print(my_score_list)
     print('\n\n\n:::::::::::::::::::Top Stocks Based On Highest Volume')
     print(my_volume_list_best)
- 
 
-    ######################################################### Phase 4 - get live data and feed into strat
-    stock_score = my_score_list.set_index('Stock')
     alpaca_top_five = condition_data(my_score_list)
+    #experiment 1 - buy the top stock at 8:31
+    #experiment 2 - buy the top 5 stocks at 8:31
 
+
+    ######################################################### Phase 4 - get live data and feed into strat for experiments 3-5
+    stock_score = my_score_list.set_index('Stock')
     # websocket client calls strats(); 
     # strats() calls ic_strat() and vwap_strat; 
     #       ic_strat() and vwap_strat return true or false; 
@@ -110,10 +112,6 @@ def main():
     my_client.run_async()
     for ticker in websocket_symbols:
         my_client.subscribe(ticker)
-
-
-    ######################################################### Phase 5 - Take conditioned data and call alpaca to buy
-
 
 if __name__ == "__main__":
     #to run this using python main.py, remember to use this commaned in terminal before running: export PYTHONPATH="$PWD/src"
