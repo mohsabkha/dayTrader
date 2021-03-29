@@ -39,7 +39,7 @@ APCA_API_BASE_URL_PAPER_SAM = "https://paper-api.alpaca.markets"
 BUY_LIMIT_SAM = '25000'
 
 # Mohammad - 1 trade based on all strats
-APCA_API_KEY_ID_ = "PKM6MR6GJO5BAZ1H99J0"
+APCA_API_KEY_ID_MO = "PKM6MR6GJO5BAZ1H99J0"
 APCA_API_SECRET_KEY_MO = "tkYetTY8oZEZoCHv66QfOmMFI4lG6N731wQX13j7"
 APCA_API_BASE_URL_PAPER_MO = "https://paper-api.alpaca.markets"
 BUY_LIMIT_MO = '25000'
