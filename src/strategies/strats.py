@@ -15,7 +15,9 @@ def strats(message, websocket_ticker_data, ic_data, my_client):
                 websocket_ticker_data[x]['close'].append(message[update]['c'])
                 websocket_ticker_data[x]['open'].append(message[update]['o'])
                 if(len(websocket_ticker_data[x]['sym']) >= 53):
-                    if (ic_indicator(websocket_ticker_data[x], ic_data) and vwap_indicator(websocket_ticker_data[x])):
+                    condition1 = ic_indicator(websocket_ticker_data[x], ic_data)
+                    condition2 = vwap_indicator(websocket_ticker_data[x])
+                    if ( condition1 and condition2 ):
                         #call alpaca
                         my_client.close_connection()
             else:
