@@ -20,21 +20,21 @@ APCA_API_SECRET_KEY_GONZALO = "your key here"
 APCA_API_BASE_URL_PAPER_GONZALO = "https://paper-api.alpaca.markets"
 BUY_LIMIT_GONZALO = '5000'
 
-# Kevin - 1 trade based on screener
-APCA_API_KEY_ID_KEV = "PKM6MR6GJO5BAZ1H99J0"
-APCA_API_SECRET_KEY_KEV = "tkYetTY8oZEZoCHv66QfOmMFI4lG6N731wQX13j7"
-APCA_API_BASE_URL_PAPER_KEV = "https://paper-api.alpaca.markets"
+# Muraad - 1 trade based on screener
+APCA_API_KEY_ID_MUR = "your key here"
+APCA_API_SECRET_KEY_MUR = "your key here"
+APCA_API_BASE_URL_PAPER_MUR = "https://paper-api.alpaca.markets"
 BUY_LIMIT_KEV = '25000'
 
 # Jaafer - 1 trade based on IC strat
-APCA_API_KEY_ID_JAF = "PKM6MR6GJO5BAZ1H99J0"
-APCA_API_SECRET_KEY_JAF = "tkYetTY8oZEZoCHv66QfOmMFI4lG6N731wQX13j7"
+APCA_API_KEY_ID_JAF = "your key here"
+APCA_API_SECRET_KEY_JAF = "your key here"
 APCA_API_BASE_URL_PAPER_JAF = "https://paper-api.alpaca.markets"
 BUY_LIMIT_JAF = '25000'
 
 # Sameer - 1 trade based on VWAP strat
-APCA_API_KEY_ID_SAM = "PKM6MR6GJO5BAZ1H99J0"
-APCA_API_SECRET_KEY_SAM = "tkYetTY8oZEZoCHv66QfOmMFI4lG6N731wQX13j7"
+APCA_API_KEY_ID_SAM = "your key here"
+APCA_API_SECRET_KEY_SAM = "your key here"
 APCA_API_BASE_URL_PAPER_SAM = "https://paper-api.alpaca.markets"
 BUY_LIMIT_SAM = '25000'
 

@@ -18,7 +18,7 @@ def ic_indicator(ticker_values, ic_data):
     ic_data['lag_span'].append(ticker_values['close'][-26])
     
     #series of checks
-    if(len(ic_data['lead_A']) > 52):
+    if(len(ic_data['lead_A']) > 53):
         flag1 = ic_data['coversion_line'][-1] > ic_data['base_line'][-1]
         flag2 = ic_data['lag_span'][-1] > ic_data['lead_A'][-52]
         flag3 = ic_data['lag_span'][-1] > ic_data['lead_B'][-52]
