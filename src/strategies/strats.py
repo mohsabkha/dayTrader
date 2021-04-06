@@ -1,10 +1,10 @@
 from .ic_indicator import ic_indicator
 from .vwap_indicator import vwap_indicator
 from config import BOUGHT_MO, BOUGHT_GONZALO
+#from alpaca.tradeBasic import create_order
 import json
-
-def strats(message, websocket_ticker_data, ic_data):
-    print(':::::::::::::::::::INTO MAIN BODY OF STRATS')
+from datetime import datetime
+def strats(message, websocket_ticker_data, data):
     message = json.loads(message)
     for update in message:
         print('received update from stock', update['sym'])
@@ -19,12 +19,19 @@ def strats(message, websocket_ticker_data, ic_data):
                 websocket_ticker_data[x]['low'].append(update['l'])
                 websocket_ticker_data[x]['close'].append(update['c'])
                 websocket_ticker_data[x]['open'].append(update['o'])
-                print(websocket_ticker_data)
                 if(len(websocket_ticker_data[x]['sym']) >= 53):
-                    condition1 = ic_indicator(websocket_ticker_data[x], ic_data)
+                    condition1 = ic_indicator(websocket_ticker_data[x], data)
                     condition2 = vwap_indicator(websocket_ticker_data[x])
-                    if ( condition1 and condition2 and not BOUGHT_MO):
+                    condition3 = datetime.now().hour >= 8
+                    condition4 = datetime.now().minute >= 31
+                    if ( condition1 and condition2 and condition3 and condition4 and not BOUGHT_MO):
                         BOUGHT_MO = True
+                        price = websocket_ticker_data[x]['close'][-1]
+                        stop_loss = price - (.0515 * price)
+                        take_profit = price + (.02 * price)
+                        qty = 25000//price
+                        side = 'buy'
+                        #create_order(websocket_ticker_data[x]['sym'], qty, side, 'buy', 'gtc', take_profit, stop_loss)
                         #call alpaca
                         print('BUY WAS INITIATED')
             else:

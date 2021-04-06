@@ -5,7 +5,7 @@ import alpaca_trade_api as tradeapi
 import time
 from alpaca_trade_api.rest import TimeFrame
 from alpaca_trade_api.rest import APIError
-from ...config import *  # should use env variables or add config to the git ignore
+from config import *  # should use env variables or add config to the git ignore
 
 listOfAlpacaAccounts = []
 gonzalo = {'apiKey': APCA_API_KEY_ID_GONZALO,
@@ -94,7 +94,7 @@ class PurchaseStock:
                         stop_price=stop_loss_price,
                         limit_price=stop_loss_price_limit,
                     )
-                )
+                ) 
                 print("Market order of | " + str(qty) + " " +
                       stock + " " + side + " | completed.")
                 response.append(True)
@@ -111,34 +111,34 @@ class PurchaseStock:
             response.append(True)
 
 
-# Run the PurchaseStock class
-for account in listOfAlpacaAccounts:
-    # TODO: get from algorithm.
-    # Make sure stop_loss_price is lower than take_profile_limit
-    # stop_loss_price_limit has to be lower than stop_loss_price
-    stocksFromAlgorithm = []
-    stocksFromAlgorithm.append(dict(
-        symbol='TSLA',
-        take_profile_limit='700.20',
-        stop_loss_price='800.0',  # intentional error to test api error
-        stop_loss_price_limit='649.0',
-        price='652.20'
-    ))
-    stocksFromAlgorithm.append(dict(
-        symbol='AAPL',
-        take_profile_limit='130.02',
-        stop_loss_price='110.02',
-        stop_loss_price_limit='100.02',
-        price='120.02'
-    ))
-    stocksFromAlgorithm.append(dict(
-        symbol='GOOGL',
-        take_profile_limit='3000',
-        stop_loss_price='2000',
-        stop_loss_price_limit='1800.0',
-        price='2026.96'
-    ))
+# # Run the PurchaseStock class
+# for account in listOfAlpacaAccounts:
+#     # TODO: get from algorithm.
+#     # Make sure stop_loss_price is lower than take_profile_limit
+#     # stop_loss_price_limit has to be lower than stop_loss_price
+#     stocksFromAlgorithm = []
+#     stocksFromAlgorithm.append(dict(
+#         symbol='TSLA',
+#         take_profile_limit='700.20',
+#         stop_loss_price='800.0',  # intentional error to test api error
+#         stop_loss_price_limit='649.0',
+#         price='652.20'
+#     ))
+#     stocksFromAlgorithm.append(dict(
+#         symbol='AAPL',
+#         take_profile_limit='130.02',
+#         stop_loss_price='110.02',
+#         stop_loss_price_limit='100.02',
+#         price='120.02'
+#     ))
+#     stocksFromAlgorithm.append(dict(
+#         symbol='GOOGL',
+#         take_profile_limit='3000',
+#         stop_loss_price='2000',
+#         stop_loss_price_limit='1800.0',
+#         price='2026.96'
+#     ))
 
-    ps = PurchaseStock(account['apiKey'],
-                       account['apiSecret'], account['baseUrl'], stocksFromAlgorithm, account['limit'])
-    ps.run()
+#     ps = PurchaseStock(account['apiKey'],
+#                        account['apiSecret'], account['baseUrl'], stocksFromAlgorithm, account['limit'])
+#     ps.run()

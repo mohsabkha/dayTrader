@@ -20,10 +20,10 @@ def ic_indicator(ticker_values, ic_data):
         #lagging span in greater than the cloud (the cloud is both leads) in the past
         flag2 = ic_data['lag_span'][-1] > ic_data['lead_A'][-52]
         flag3 = ic_data['lag_span'][-1] > ic_data['lead_B'][-52]
-        #ticker values close higher than the cloud in the present but open below
-        flag4 = ticker_values['close'] > ic_data['lead_A'][-26]
-        flag5 = ticker_values['close'] > ic_data['lead_B'][-26]
-        flag6 = ticker_values['close'] < ic_data['lead_B'][-26] or ticker_values['close'] < ic_data['lead_A'][-26]
+        #current ticker values close higher than the cloud in the present but open below the cloud
+        flag4 = ticker_values['close'][-1] > ic_data['lead_A'][-26]
+        flag5 = ticker_values['close'][-1] > ic_data['lead_B'][-26]
+        flag6 = ticker_values['close'][-1] < ic_data['lead_B'][-26] or ticker_values['close'][-1] < ic_data['lead_A'][-26]
         #the cloud is green in the future
         flag7 = ic_data['lead_A'][-1] > ic_data['lead_B'][-1]
         #check if all conditions are true in order to buy

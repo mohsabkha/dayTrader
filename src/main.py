@@ -1,5 +1,5 @@
 #make sure you create this file based on config_example.py
-from config import TICKER_PAGE_PATH, END, KEY
+from config import *
 
 from screener.retreive_data.ticker_functions.get_tickers import get_tickers
 from screener.retreive_data.ticker_functions.combine_tickers import combine_tickers
@@ -12,7 +12,7 @@ from screener.filters.second_data_filter import second_data_filter
 from alpaca.condition_data import condition_data
 from strategies.strats import strats
 from strategies.strat_list import strat_list
-
+from alpaca.trade import PurchaseStock
 
 import pandas as pd
 import numpy as np
@@ -24,6 +24,7 @@ import os
 def main():
     ######################################################### Phase 1 - get tickers
     #get current time
+
     now = datetime.now().strftime('%H:%M:%S')
     print(':::::::::::::::::::START TIME IS ', now)
     #check current directory
@@ -103,8 +104,6 @@ def main():
     print('\n\n\n:::::::::::::::::::CONDTIONING DATA FOR ALPACA')
     alpaca_top_five = condition_data(my_score_list)
     #experiment 1 - buy the top stock at 8:31
-    #experiment 2 - buy the top 5 stocks at 8:31
-
 
     ######################################################### Phase 4 - get live data and feed into strat for experiments 3-5
     print(':::::::::::::::::::CONDTIONING DATA FOR WEBSOCKET')
@@ -117,7 +116,6 @@ def main():
 
     def entry_to_strats(message):
         print(':::::::::::::::::::ENTERED STRATS')
-        print(message)
         strats(message, websocket_ticker_data, ic_data)
 
     print(':::::::::::::::::::OPENING WEBSOCKET')
@@ -128,11 +126,40 @@ def main():
     for ticker in websocket_symbols:
         my_client.subscribe(ticker)
 
-    time.sleep(600)
+    print(':::::::::::::::::::ENTERING BUSY WAITING WHILE DATA IS COLLECTED')
+    timer = True
+    while( timer ):
+        if(datetime.now().hour == 8 and datetime.now().minute == 30):
+            timer = False
+    print(':::::::::::::::::::EXITING BUSY WAITING')
+    print(datetime.now())
+
+    print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 1 AND 2')
+    stocksFromAlgorithm.append(dict(
+        symbol='TSLA',
+        take_profile_limit='700.20',
+        stop_loss_price='800.0',  # intentional error to test api error
+        stop_loss_price_limit='649.0',
+        price='652.20'
+    ))
+    gonzalo_ps = PurchaseStock(
+        APCA_API_KEY_ID_GONZALO,
+        APCA_API_SECRET_KEY_GONZALO, 
+        APCA_API_BASE_URL_PAPER_GONZALO, 
+        alpaca_top_five, 
+        BUY_LIMIT_GONZALO)
+    sam_ps = PurchaseStock(
+        APCA_API_KEY_ID_SAM,
+        APCA_API_SECRET_KEY_SAM,
+        APCA_API_BASE_URL_PAPER_SAM, 
+        alpaca_top_five[0], 
+        BUY_LIMIT_SAM)
+    print(':::::::::::::::::::STOCKS PURCHASED FOR EXPERIMENT 1 AND 2')
+    time.sleep(14400)
+    #sell off
     print(':::::::::::::::::::CLOSING WEBSOCKET')
     my_client.close_connection()
 if __name__ == "__main__":
     #to run this using python main.py, remember to use this commaned in terminal before running: export PYTHONPATH="$PWD/src"
     main()
-    
     

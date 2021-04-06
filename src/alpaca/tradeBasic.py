@@ -1,6 +1,6 @@
 import requests
 import json
-from ...config import *
+from config import *
 
 
 ACCOUNT_URL = "{}/v2/account".format(APCA_API_BASE_URL_PAPER)
@@ -18,9 +18,7 @@ def get_account():
 # time_in_force, might want to use opg instead of gtc or day
 def create_order(symbol, qty, side, type, time_in_force, take_profile, stop_loss):
     data = {
-        "symbol": symbol, "qty": qty, "side": side, "type": type, "time_in_force": time_in_force, "take_profit": {
-            "limit_price": "301"
-        }, "stop_loss": stop_loss
+        "symbol": symbol, "qty": qty, "side": side, "type": type, "time_in_force": time_in_force, "take_profit": {"limit_price": "301"}, "stop_loss": stop_loss
     }
     r = requests.post(ORDERS_URL, json=data, headers=API_HEADERS)
     return json.loads(r.content)

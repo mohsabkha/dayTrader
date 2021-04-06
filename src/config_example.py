@@ -15,10 +15,10 @@ TICKER_PAGE_PATH = '\\polygon_data\\tickers'
 
 # Below is used for alpaca code
 # Gonzalo - 5 trades based on screener
-APCA_API_KEY_ID_GONZALO = "your key here"
-APCA_API_SECRET_KEY_GONZALO = "your key here"
+APCA_API_KEY_ID_GONZALO = "PKQRKQYQTE7RG9QQLCGQ"
+APCA_API_SECRET_KEY_GONZALO = "iUTMGWS5ZuQVybsB8WrE74AEdpeUyt5qqh1BnThl"
 APCA_API_BASE_URL_PAPER_GONZALO = "https://paper-api.alpaca.markets"
-BUY_LIMIT_GONZALO = '5000'
+BUY_LIMIT_GONZALO = '25000'
 BOUGHT_GONZALO = False
 # Muraad - 1 trade based on screener
 APCA_API_KEY_ID_MUR = "your key here"
@@ -27,14 +27,14 @@ APCA_API_BASE_URL_PAPER_MUR = "https://paper-api.alpaca.markets"
 BUY_LIMIT_KEV = '25000'
 BOUGHT_MUR = False
 # Jaafer - 1 trade based on IC strat
-APCA_API_KEY_ID_JAF = "your key here"
-APCA_API_SECRET_KEY_JAF = "your key here"
+APCA_API_KEY_ID_JAF = "PKVAAXXOYV4JY2ASJKNV"
+APCA_API_SECRET_KEY_JAF = "tpvLSxGtLlIshudqxChLY2gfQfd98OQ8yYwJalcY"
 APCA_API_BASE_URL_PAPER_JAF = "https://paper-api.alpaca.markets"
 BUY_LIMIT_JAF = '25000'
 BOUGHT_JAF = False
 # Sameer - 1 trade based on VWAP strat
-APCA_API_KEY_ID_SAM = "your key here"
-APCA_API_SECRET_KEY_SAM = "your key here"
+APCA_API_KEY_ID_SAM = "PKGBHOSGRBVHGP7L8M4R"
+APCA_API_SECRET_KEY_SAM = "VCSyNX2kofcRsQC25RV95sH6QtuZrtrvWJwuzDVI"
 APCA_API_BASE_URL_PAPER_SAM = "https://paper-api.alpaca.markets"
 BUY_LIMIT_SAM = '25000'
 BOUGHT_SAM = False
@@ -46,10 +46,60 @@ BUY_LIMIT_MO = '25000'
 BOUGHT_MO = False
 # APCA_API_BASE_URL_LIVE = "https://api.alpaca.markets"
 
-
 # Used for tradeBasic.py
 APCA_API_KEY_ID = "your key here"
 APCA_API_SECRET_KEY = "your key here"
 APCA_API_BASE_URL_PAPER = "https://paper-api.alpaca.markets"
+
+#this is an alternative to the other code
+ACCOUNTS = {
+    'alpaca_base_url' : 'https://api.alpaca.markets',
+    'alpaca_paper_url' : 'https://paper-api.alpaca.markets',
+    'accounts':[
+        {
+            'first_name': 'GONZALO',
+            'last_name': 'PANTOJA',
+            'api_key': 'PKQRKQYQTE7RG9QQLCGQ',
+            'secret_key': 'iUTMGWS5ZuQVybsB8WrE74AEdpeUyt5qqh1BnThl',
+            'buy_power' : '25000'
+        },
+        {
+            'first_name': 'MOHAMMAD',
+            'last_name': 'KHAN',
+            'api_key': 'PKM6MR6GJO5BAZ1H99J0',
+            'secret_key': 'tkYetTY8oZEZoCHv66QfOmMFI4lG6N731wQX13j7',
+            'buy_power' : '25000'
+        },
+        {
+            'first_name': 'JAAFER',
+            'last_name': 'MONSOUR',
+            'api_key': 'PKVAAXXOYV4JY2ASJKNV',
+            'secret_key': 'tpvLSxGtLlIshudqxChLY2gfQfd98OQ8yYwJalcY',
+            'buy_power' : '25000'
+        },
+        {
+            'first_name': 'SAMEER',
+            'last_name': 'TARIQ',
+            'api_key': 'PKGBHOSGRBVHGP7L8M4R',
+            'secret_key': 'VCSyNX2kofcRsQC25RV95sH6QtuZrtrvWJwuzDVI',
+            'buy_power' : '25000'
+        },
+        {
+            'first_name': 'MURAAD',
+            'last_name': 'KHAN',
+            'api_key': '',
+            'secret_key': '',
+            'buy_power' : '25000'
+        }
+    ]
+}
+
+
+
+
+
+
+
+
 
 
