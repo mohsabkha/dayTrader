@@ -117,15 +117,12 @@ def main():
     def entry_to_strats(message):
         print(':::::::::::::::::::ENTERED STRATS')
         strats(message, websocket_ticker_data, ic_data)
-
     print(':::::::::::::::::::OPENING WEBSOCKET')
     my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
-   
     my_client.run_async()
     print(':::::::::::::::::::SUBSCRIBING TO STOCKS IN WEBSOCKET')
     for ticker in websocket_symbols:
         my_client.subscribe(ticker)
-
     print(':::::::::::::::::::ENTERING BUSY WAITING WHILE DATA IS COLLECTED')
     timer = True
     while( timer ):
@@ -133,22 +130,14 @@ def main():
             timer = False
     print(':::::::::::::::::::EXITING BUSY WAITING')
     print(datetime.now())
-
     print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 1 AND 2')
-    stocksFromAlgorithm.append(dict(
-        symbol='TSLA',
-        take_profile_limit='700.20',
-        stop_loss_price='800.0',  # intentional error to test api error
-        stop_loss_price_limit='649.0',
-        price='652.20'
-    ))
-    gonzalo_ps = PurchaseStock(
+    ps_gonzalo = PurchaseStock(
         APCA_API_KEY_ID_GONZALO,
         APCA_API_SECRET_KEY_GONZALO, 
         APCA_API_BASE_URL_PAPER_GONZALO, 
         alpaca_top_five, 
         BUY_LIMIT_GONZALO)
-    sam_ps = PurchaseStock(
+    ps_sam = PurchaseStock(
         APCA_API_KEY_ID_SAM,
         APCA_API_SECRET_KEY_SAM,
         APCA_API_BASE_URL_PAPER_SAM, 

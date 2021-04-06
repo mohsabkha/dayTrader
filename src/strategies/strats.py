@@ -1,7 +1,7 @@
 from .ic_indicator import ic_indicator
 from .vwap_indicator import vwap_indicator
-from config import BOUGHT_MO, BOUGHT_GONZALO
-#from alpaca.tradeBasic import create_order
+from config import *
+from alpaca.trade import *
 import json
 from datetime import datetime
 def strats(message, websocket_ticker_data, data):
@@ -24,16 +24,54 @@ def strats(message, websocket_ticker_data, data):
                     condition2 = vwap_indicator(websocket_ticker_data[x])
                     condition3 = datetime.now().hour >= 8
                     condition4 = datetime.now().minute >= 31
-                    if ( condition1 and condition2 and condition3 and condition4 and not BOUGHT_MO):
+                    # conditional for ic indicator
+                    if (condition1 and condition3 and condition4 and not BOUGHT_MUR):
+                        BOUGHT_MUR = True
+                        stock = dict(
+                            symbol = websocket_ticker_data[x]['sym'][-1],
+                            price = websocket_ticker_data[x]['close'][-1],
+                            stop_loss_price = price - (.0515 * price),
+                            stop_loss_price_limit = price - (.1 * price),
+                            take_profit_limit = price + (.02 * price))
+                        ps_mo = PurchaseStock(
+                                    APCA_API_KEY_ID_MUR,
+                                    APCA_API_SECRET_KEY_MUR,
+                                    APCA_API_BASE_URL_PAPER_MUR, 
+                                    stock, 
+                                    BUY_LIMIT_MUR)
+                        print('BUY WAS INITIATED FOR IC')
+                    #conditional for vwap indicator
+                    if (condition2 and condition3 and condition4 and not BOUGHT_JAF):
+                        BOUGHT_JAF = True
+                        stock = dict(
+                            symbol = websocket_ticker_data[x]['sym'][-1],
+                            price = websocket_ticker_data[x]['close'][-1],
+                            stop_loss_price = price - (.0515 * price),
+                            stop_loss_price_limit = price - (.1 * price),
+                            take_profit_limit = price + (.02 * price))
+                        ps_mo = PurchaseStock(
+                                    APCA_API_KEY_ID_JAF,
+                                    APCA_API_SECRET_KEY_JAF,
+                                    APCA_API_BASE_URL_PAPER_JAF, 
+                                    stock, 
+                                    BUY_LIMIT_JAF)
+                        print('BUY WAS INITIATED FOR VWAP')
+                    #conditional for vwap and ic indicators
+                    if (condition1 and condition2 and condition3 and condition4 and not BOUGHT_MO):
                         BOUGHT_MO = True
-                        price = websocket_ticker_data[x]['close'][-1]
-                        stop_loss = price - (.0515 * price)
-                        take_profit = price + (.02 * price)
-                        qty = 25000//price
-                        side = 'buy'
-                        #create_order(websocket_ticker_data[x]['sym'], qty, side, 'buy', 'gtc', take_profit, stop_loss)
-                        #call alpaca
-                        print('BUY WAS INITIATED')
+                        stock = dict(
+                            symbol = websocket_ticker_data[x]['sym'][-1],
+                            price = websocket_ticker_data[x]['close'][-1],
+                            stop_loss_price = price - (.0515 * price),
+                            stop_loss_price_limit = price - (.1 * price),
+                            take_profit_limit = price + (.02 * price))
+                        ps_mo = PurchaseStock(
+                                    APCA_API_KEY_ID_MO,
+                                    APCA_API_SECRET_KEY_MO,
+                                    APCA_API_BASE_URL_PAPER_MO, 
+                                    stock, 
+                                    BUY_LIMIT_MO)
+                        print('BUY WAS INITIATED FOR BOTH VWAP AND IC')
             else:
                 print(f':::LOOKING FOR SYMBOL:::')
         
