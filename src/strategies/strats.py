@@ -39,7 +39,7 @@ def strats(message, websocket_ticker_data, data):
                                     APCA_API_BASE_URL_PAPER_MUR, 
                                     stock, 
                                     BUY_LIMIT_MUR)
-                        print('BUY WAS INITIATED FOR IC')
+                        print(':::::::::::::::::::BUY WAS INITIATED FOR IC - MURAADS ACCOUNT SHOULD BE UPDATED')
                     #conditional for vwap indicator
                     if (condition2 and condition3 and condition4 and not BOUGHT_JAF):
                         BOUGHT_JAF = True
@@ -55,7 +55,7 @@ def strats(message, websocket_ticker_data, data):
                                     APCA_API_BASE_URL_PAPER_JAF, 
                                     stock, 
                                     BUY_LIMIT_JAF)
-                        print('BUY WAS INITIATED FOR VWAP')
+                        print(':::::::::::::::::::BUY WAS INITIATED FOR VWAP - JAAFERS ACCOUNT SHOULD BE UPDATED')
                     #conditional for vwap and ic indicators
                     if (condition1 and condition2 and condition3 and condition4 and not BOUGHT_MO):
                         BOUGHT_MO = True
@@ -71,7 +71,7 @@ def strats(message, websocket_ticker_data, data):
                                     APCA_API_BASE_URL_PAPER_MO, 
                                     stock, 
                                     BUY_LIMIT_MO)
-                        print('BUY WAS INITIATED FOR BOTH VWAP AND IC')
+                        print(':::::::::::::::::::BUY WAS INITIATED FOR BOTH VWAP AND IC - MOHAMMADS ACCOUNT SHOULD BE UPDATED')
             else:
-                print(f':::LOOKING FOR SYMBOL:::')
+                print(f'a non-stock message was received and processed...')
         
