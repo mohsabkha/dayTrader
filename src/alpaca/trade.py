@@ -109,7 +109,7 @@ class PurchaseStock:
             print("Quantity is 0, order of | " + str(qty) +
                   " " + stock + " " + side + " | not completed.")
             response.append(True)
-
+ 
 
 # # Run the PurchaseStock class
 # for account in listOfAlpacaAccounts:

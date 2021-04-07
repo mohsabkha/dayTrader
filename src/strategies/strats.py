@@ -4,6 +4,7 @@ from config import *
 from alpaca.trade import *
 import json
 from datetime import datetime
+
 def strats(message, websocket_ticker_data, data):
     message = json.loads(message)
     for update in message:
@@ -21,7 +22,9 @@ def strats(message, websocket_ticker_data, data):
                 websocket_ticker_data[x]['open'].append(update['o'])
                 if(len(websocket_ticker_data[x]['sym']) >= 53):
                     condition1 = ic_indicator(websocket_ticker_data[x], data)
+                    print(':::::::::::::::::::EXIT IC INDICATOR')
                     condition2 = vwap_indicator(websocket_ticker_data[x])
+                    print(':::::::::::::::::::EXIT VWAP INDICATOR')
                     condition3 = datetime.now().hour >= 8
                     condition4 = datetime.now().minute >= 31
                     # conditional for ic indicator
@@ -73,5 +76,5 @@ def strats(message, websocket_ticker_data, data):
                                     BUY_LIMIT_MO)
                         print(':::::::::::::::::::BUY WAS INITIATED FOR BOTH VWAP AND IC - MOHAMMADS ACCOUNT SHOULD BE UPDATED')
             else:
-                print(f'a non-stock message was received and processed...')
+                print('...')
         

@@ -27,6 +27,7 @@ def ic_indicator(ticker_values, ic_data):
         #the cloud is green in the future
         flag7 = ic_data['lead_A'][-1] > ic_data['lead_B'][-1]
         #check if all conditions are true in order to buy
+        print(':::::::::::::::::::CHECKING IC FLAGS')
         if(flag1 and flag2 and flag3 and flag4 and flag5 and flag6 and flag7):
             # TO-DO : set profit loss/gain here and return it
             print(':::::::::::::::::::IC INDICATOR RETURNED TRUE')

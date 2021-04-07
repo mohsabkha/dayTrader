@@ -99,11 +99,12 @@ def main():
     del now
     print('\n\n\n:::::::::::::::::::Top Stocks Based On Score')
     print(my_score_list)
+    my_score_list.to_csv('top_five_stocks.csv')
     print('\n\n\n:::::::::::::::::::Top Stocks Based On Highest Volume')
     print(my_volume_list_best)
     print('\n\n\n:::::::::::::::::::CONDTIONING DATA FOR ALPACA')
-    alpaca_top_five = condition_data(my_score_list)
-    #experiment 1 - buy the top stock at 8:31
+    alpaca_top_stocks_frame, alpaca_top_stocks_array = condition_data(my_score_list)
+
 
     ######################################################### Phase 4 - get live data and feed into strat for experiments 3-5
     print(':::::::::::::::::::CONDTIONING DATA FOR WEBSOCKET')
@@ -115,7 +116,7 @@ def main():
     websocket_symbols, websocket_ticker_data, ic_data = strat_list(stock_score)
 
     def entry_to_strats(message):
-        print(':::::::::::::::::::ENTERED STRATS')
+        print('\n\n:::::::::::::::::::ENTERED STRATS')
         strats(message, websocket_ticker_data, ic_data)
     print(':::::::::::::::::::OPENING WEBSOCKET')
     my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
@@ -130,18 +131,19 @@ def main():
             timer = False
     print(':::::::::::::::::::EXITING BUSY WAITING')
     print(datetime.now())
-    print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 1 AND 2')
+    print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 1')
     ps_gonzalo = PurchaseStock(
         APCA_API_KEY_ID_GONZALO,
         APCA_API_SECRET_KEY_GONZALO, 
         APCA_API_BASE_URL_PAPER_GONZALO, 
-        alpaca_top_five, 
+        alpaca_top_stocks_array,
         BUY_LIMIT_GONZALO)
+    print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 2')
     ps_sam = PurchaseStock(
         APCA_API_KEY_ID_SAM,
         APCA_API_SECRET_KEY_SAM,
         APCA_API_BASE_URL_PAPER_SAM, 
-        alpaca_top_five[0], 
+        alpaca_top_stocks_array[0], 
         BUY_LIMIT_SAM)
     print(':::::::::::::::::::STOCKS PURCHASED FOR EXPERIMENT 1 AND 2')
     time.sleep(14400)
