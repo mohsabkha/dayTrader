@@ -8,11 +8,11 @@ from datetime import datetime
 def strats(message, websocket_ticker_data, data):
     message = json.loads(message)
     for update in message:
-        print('received update from stock', update['sym'])
+        print('received update from stock ', update['sym'])
         for x in range(len(websocket_ticker_data)) :
             print('entered update')
             if(update['sym'] == websocket_ticker_data[x]['sym'][0]):
-                print('organizing data from update\n')
+                print('organizing data from update')
                 websocket_ticker_data[x]['sym'].append(update['sym'])
                 websocket_ticker_data[x]['volume'].append(update['v'])
                 websocket_ticker_data[x]['vwap'].append(update['a'])

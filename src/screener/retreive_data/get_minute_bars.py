@@ -19,7 +19,7 @@ from .check_key import check_key
 #TO-DO:
 ####################################################################
 def get_minute_bars(first_filter, date, url=POLYGON_AGGS_MINUTE_URL):
-    print(':::::::::::::::::::GETTING MINUTE BY MINUTE DATA FROM ', date)
+    print(':::::::::::::::::::ENTERED GET MINUTE BARS FOR', date)
     session = requests.Session()
     # In case I run into issues, retry my connection
     retries = Retry(total=5, backoff_factor=0.1, status_forcelist=[ 500, 502, 503, 504 ])
@@ -35,8 +35,16 @@ def get_minute_bars(first_filter, date, url=POLYGON_AGGS_MINUTE_URL):
             'volume':[],
             'weighted volume':[]
     }
+    loading_counter = 0
+    loading_animations = ['|', '/', '-', '\\']
     for symbol in first_filter:
         try:
+            msg = ' loading minute data: ' + loading_animations[loading_counter]
+            print(msg, end='\r')
+            if(loading_counter==3):
+                loading_counter = 0
+            else:
+                loading_counter = loading_counter+1
             r = session.get(POLYGON_AGGS_MINUTE_URL.format(symbol, date, date, KEY))
             if r:
                 data = r.json()
@@ -56,14 +64,13 @@ def get_minute_bars(first_filter, date, url=POLYGON_AGGS_MINUTE_URL):
                 #if api did not contain any data
                 else:
                     msg = ('No data for symbol ' + str(symbol))
-                    print(msg)
             #if data was not returned from api
             else:
                 msg = ('No response for symbol ' + str(symbol))
-                print(msg)
             #after all dates are run, drop useless rows
         # Raise exception but continue           
         except:
             msg = ('****** exception raised for symbol ' + str(symbol))
             print(msg)
+    print('loading minute data: FINISHED LOADED MINUTE DATA')
     return my_list

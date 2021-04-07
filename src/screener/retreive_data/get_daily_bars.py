@@ -34,8 +34,16 @@ def get_daily_bars(symbols, start, end):
             'volume':[],
             'weighted volume':[]
     }
+    loading_counter = 0
+    loading_animations = ['|', '/', '-', '\\']
     for symbol in symbols:
         try:
+            msg = ' loading daily data: ' + loading_animations[loading_counter]
+            print(msg, end='\r')
+            if(loading_counter==3):
+                loading_counter = 0
+            else:
+                loading_counter = loading_counter+1
             r = session.get(POLYGON_AGGS_URL.format(symbol, start, end, KEY))
             if r:
                 data = r.json()
@@ -53,14 +61,13 @@ def get_daily_bars(symbols, start, end):
                 #if api did not contain any data
                 else:
                     msg = ('No data for symbol ' + str(symbol))
-                    print(msg)
             #if data was not returned from api
             else:
                 msg = ('No response for symbol ' + str(symbol))
-                print(msg)
             #after all dates are run, drop useless rows
         # Raise exception but continue           
         except:
             msg = ('****** exception raised for symbol ' + str(symbol))
             print(msg)
+    print('loading daily data: FINISHED LOADED DAILY DATA')
     return my_list

@@ -23,10 +23,9 @@ import os
 
 def main():
     ######################################################### Phase 1 - get tickers
-    #get current time
-
+    #get the current time
     now = datetime.now().strftime('%H:%M:%S')
-    print(':::::::::::::::::::START TIME IS ', now)
+    print(':::::::::::::::::::START TIME IS', now)
     #check current directory
     dir_path = os.getcwd()
     path = (dir_path + TICKER_PAGE_PATH)
@@ -36,7 +35,7 @@ def main():
         get_tickers()
     #use combine tickers to ensure all ticker data from get_tickers is correct    
     datetime.now().strftime('%H:%M:%S')
-    print(':::::::::::::::::::ENTERING COMBINE TICKERS - ',datetime.now().strftime('%H:%M:%S'))
+    print(':::::::::::::::::::ENTERING COMBINE TICKERS -',datetime.now().strftime('%H:%M:%S'))
     #store ticker data into symbols
     symbols = combine_tickers('polygon_data/tickers')
     #combine tickers will create csv files, read those csv files into polygon_tickers with 
@@ -58,11 +57,11 @@ def main():
     data = get_open_close(symbols)
     #returns a list of symbols that met criteria for day trades
     print(':::::::::::::::::::DATA BEING SENT TO FIRST DATA FILTER',datetime.now().strftime('%H:%M:%S'))
-    print(':::::::::::::::::::This is the length of that data\n',len(data))
-    print(':::::::::::::::::::ENTERING FIRST DATA FILTER - ',datetime.now().strftime('%H:%M:%S'))
+    print(':::::::::::::::::::This is the length of that data: ',len(data))
+    print(':::::::::::::::::::ENTERING FIRST DATA FILTER -',datetime.now().strftime('%H:%M:%S'))
     filtered_data = first_data_filter(data)
     #retrieves minute data for symbols that met criteria
-    print(':::::::::::::::::::ENTERING GET MINUTE BARS - ',datetime.now().strftime('%H:%M:%S'))
+    print(':::::::::::::::::::ENTERING GET MINUTE BARS -',datetime.now().strftime('%H:%M:%S'))
     minute_data = get_minute_bars(first_filter=filtered_data, date=END)
     almost_clean_data = pd.DataFrame(minute_data)
     almost_clean_data = almost_clean_data.reindex(index=almost_clean_data.index[::-1])
@@ -70,7 +69,7 @@ def main():
     daily_data = pd.DataFrame(data)
     daily_data.set_index('symbol', inplace=True)
     #filter remaining data again
-    print(':::::::::::::::::::ENTERING SECOND DATA FILTER - ', datetime.now().strftime('%H:%M:%S'))
+    print(':::::::::::::::::::ENTERING SECOND DATA FILTER -', datetime.now().strftime('%H:%M:%S'))
     recommendation_list = second_data_filter(filtered_data, almost_clean_data, daily_data)
     recommendation_list = pd.DataFrame(recommendation_list)
     #print date to ensure that correct date is being used
@@ -103,6 +102,7 @@ def main():
     print('\n\n\n:::::::::::::::::::Top Stocks Based On Highest Volume')
     print(my_volume_list_best)
     print('\n\n\n:::::::::::::::::::CONDTIONING DATA FOR ALPACA')
+    #format data for alpaca that will be called in the next phase
     alpaca_top_stocks_frame, alpaca_top_stocks_array = condition_data(my_score_list)
 
 
@@ -110,13 +110,13 @@ def main():
     print(':::::::::::::::::::CONDTIONING DATA FOR WEBSOCKET')
     stock_score = my_score_list.set_index('Stock')
     # websocket client calls strats(); 
-    # strats() calls ic_strat() and vwap_strat; 
-    #       ic_strat() and vwap_strat return true or false; 
-    # strats() then calls alpaca if conditions are true
+        # strats() calls ic_strat() and vwap_strat; 
+            # ic_strat() and vwap_strat return true or false; 
+        # strats() then calls alpaca if conditions are true
     websocket_symbols, websocket_ticker_data, ic_data = strat_list(stock_score)
 
     def entry_to_strats(message):
-        print('\n\n:::::::::::::::::::ENTERED STRATS')
+        print('\n:::::::::::::::::::ENTERED STRATS')
         strats(message, websocket_ticker_data, ic_data)
     print(':::::::::::::::::::OPENING WEBSOCKET')
     my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
@@ -127,7 +127,7 @@ def main():
     print(':::::::::::::::::::ENTERING BUSY WAITING WHILE DATA IS COLLECTED')
     timer = True
     while( timer ):
-        if(datetime.now().hour == 8 and datetime.now().minute == 30):
+        if(datetime.now().hour >= 8 and datetime.now().minute < 30):
             timer = False
     print(':::::::::::::::::::EXITING BUSY WAITING')
     print(datetime.now())
