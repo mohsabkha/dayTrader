@@ -1,34 +1,14 @@
-# dayTrader
-
-## STRAT 1 - ichimoku cloud inidcator strat 1
-    closing price ends above the cloud (a combination of two rolling averages)
-    cloud must be green 26 periods (the extended average is higher than the destended average)
-    conversion line crossed above the base line (these two are also ratio/averages)
-    lagging span must be above the cloud
-  ### Data Needed:
-	  5 minute open
-	  5 minute close
-	  5 minute high
-	  5 minute low
-	  5 minute volume weighted average price
-		  polygon provides this in one api call
-
-## STRAT 2 - Reversal VWAP + Bollinger Strat
-    RSI is above 90 or below 10 at the time of the 5th bar (below the standard deviation)
-    At least 5 candlesticks moving in the same direction
-    Use open, close, high and low factors to find trend reversal indicators
-    When price is above vwap, buyers are in control.
-    Look for a crossing point and buy 1-2 periods after that point. 
-    Put a take loss at the current VWAP point
-   ### Data Needed:
-	  5 minute open
-	  5 minute close
-	  5 minute high
-	  5 minute low
-	  5 minute volume weighted average price
-		polygon provides this in one api call
-
-
+# day-Trader
+## To Run:
+    Get into the project folder in your terminal
+    You should see the src folder, the README, and the LICENSE
+    When you are in this directory in the ternimal, run this commad:
+    	```export PYTHONPATH="$PWD/src```
+    This will set your absolute path to be the src folder, and any import statements will be able to use this path to properly import
+    After this, you will have to install all of the packages that are used.
+    Once the packages are installed, you can run the program from the src directory by running the commande:
+    	```python main.py```
+	
 ### Phase 1: (based on volume, price, and averages of each)
     get correct historic data
     implement vwap strat
@@ -42,12 +22,3 @@
     make sure websockets work
     make sure you can pull data from websockets
     make sure IC works
-
-
-
-### (MAYBE?) Phase 3: (based on volume)
-    get correct historic data
-    implement FA strat
-    make sure websockets work
-    make sure you can pull data from websockets
-    make sure FA works
