@@ -114,23 +114,26 @@ def main():
             # ic_strat() and vwap_strat return true or false; 
         # strats() then calls alpaca if conditions are true
     websocket_symbols, websocket_ticker_data, ic_data = strat_list(stock_score)
-
+    #function to be used by websocket
     def entry_to_strats(message):
-        print('\n:::::::::::::::::::ENTERED STRATS')
         strats(message, websocket_ticker_data, ic_data)
+    #begin opening websocket
     print(':::::::::::::::::::OPENING WEBSOCKET')
     my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
+    #run it asyncronously
     my_client.run_async()
+    #subscribe to all stocks in the list
     print(':::::::::::::::::::SUBSCRIBING TO STOCKS IN WEBSOCKET')
     for ticker in websocket_symbols:
         my_client.subscribe(ticker)
+    #busy waiting loop that prevents the socket from closing
     print(':::::::::::::::::::ENTERING BUSY WAITING WHILE DATA IS COLLECTED')
     timer = True
     while( timer ):
+        #if its 8:31, then close the loop
         if(datetime.now().hour >= 8 and datetime.now().minute < 30):
             timer = False
-    print(':::::::::::::::::::EXITING BUSY WAITING')
-    print(datetime.now())
+    #buy all stocks
     print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 1')
     ps_gonzalo = PurchaseStock(
         APCA_API_KEY_ID_GONZALO,
@@ -138,6 +141,7 @@ def main():
         APCA_API_BASE_URL_PAPER_GONZALO, 
         alpaca_top_stocks_array,
         BUY_LIMIT_GONZALO)
+    #buy one stock
     print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 2')
     ps_sam = PurchaseStock(
         APCA_API_KEY_ID_SAM,
@@ -145,8 +149,8 @@ def main():
         APCA_API_BASE_URL_PAPER_SAM, 
         alpaca_top_stocks_array[0], 
         BUY_LIMIT_SAM)
-    print(':::::::::::::::::::STOCKS PURCHASED FOR EXPERIMENT 1 AND 2')
-    time.sleep(14400)
+    print(':::::::::::::::::::CALL TO SLEEP, PREVENT WEBSOCKET CLOSING')
+    time.sleep(16000)
     #sell off
     print(':::::::::::::::::::CLOSING WEBSOCKET')
     my_client.close_connection()

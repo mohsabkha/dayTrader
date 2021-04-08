@@ -10,9 +10,7 @@ def strats(message, websocket_ticker_data, data):
     for update in message:
         print('received update from stock ', update['sym'])
         for x in range(len(websocket_ticker_data)) :
-            print('entered update')
             if(update['sym'] == websocket_ticker_data[x]['sym'][0]):
-                print('organizing data from update')
                 websocket_ticker_data[x]['sym'].append(update['sym'])
                 websocket_ticker_data[x]['volume'].append(update['v'])
                 websocket_ticker_data[x]['vwap'].append(update['a'])
@@ -76,5 +74,5 @@ def strats(message, websocket_ticker_data, data):
                                     BUY_LIMIT_MO)
                         print(':::::::::::::::::::BUY WAS INITIATED FOR BOTH VWAP AND IC - MOHAMMADS ACCOUNT SHOULD BE UPDATED')
             else:
-                print('...')
+                mes = '...'
         
