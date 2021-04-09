@@ -118,51 +118,55 @@ def main():
             APCA_API_BASE_URL_PAPER_GONZALO, 
             alpaca_top_stocks_array,
             BUY_LIMIT_GONZALO)
+        ps_gonzalo.run()
         #buy one stock
         print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 2')
+        to_list = [alpaca_top_stocks_array[0]]
         ps_sam = PurchaseStock(
             APCA_API_KEY_ID_SAM,
             APCA_API_SECRET_KEY_SAM,
             APCA_API_BASE_URL_PAPER_SAM, 
-            alpaca_top_stocks_array[0], 
+            to_list, 
             BUY_LIMIT_SAM)
+        ps_sam.run()
     except:
         print('error log: Error In Phase 3 ------------------------------------------')
     ######################################################### Phase 4 - get live data and feed into strat for experiments 3-5
-    try:
-        print(':::::::::::::::::::CONDTIONING DATA FOR WEBSOCKET')
-        stock_score = my_score_list.set_index('Stock')
-        # websocket client calls strats(); 
-            # strats() calls ic_strat() and vwap_strat; 
-                # ic_strat() and vwap_strat return true or false; 
-            # strats() then calls alpaca if conditions are true
-        websocket_symbols, websocket_ticker_data, ic_data = strat_list(stock_score)
-        #function to be used by websocket
-        def entry_to_strats(message):
-            strats(message, websocket_ticker_data, ic_data)
-        #begin opening websocket
-        print(':::::::::::::::::::OPENING WEBSOCKET')
-        my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
-        #run it asyncronously
-        my_client.run_async()
-        #subscribe to all stocks in the list
-        print(':::::::::::::::::::SUBSCRIBING TO STOCKS IN WEBSOCKET')
-        for ticker in websocket_symbols:
-            my_client.subscribe(ticker)
-        #busy waiting loop that prevents the socket from closing
-        print(':::::::::::::::::::ENTERING BUSY WAITING WHILE DATA IS COLLECTED')
-        timer = True
-        while( timer ):
-            #if its 8:31, then close the loop
-            if(datetime.now().hour >= 8 and datetime.now().minute < 30):
-                timer = False
-        print(':::::::::::::::::::CALL TO SLEEP, PREVENT WEBSOCKET CLOSING')
-        time.sleep(16000)
-        #sell off
-        print(':::::::::::::::::::CLOSING WEBSOCKET')
-        my_client.close_connection()
-    except:
-        print('error log: Error In Phase 4 ------------------------------------------')
+    if False:
+        try:
+            print(':::::::::::::::::::CONDTIONING DATA FOR WEBSOCKET')
+            stock_score = my_score_list.set_index('Stock')
+            # websocket client calls strats(); 
+                # strats() calls ic_strat() and vwap_strat; 
+                    # ic_strat() and vwap_strat return true or false; 
+                # strats() then calls alpaca if conditions are true
+            websocket_symbols, websocket_ticker_data, ic_data = strat_list(stock_score)
+            #function to be used by websocket
+            def entry_to_strats(message):
+                strats(message, websocket_ticker_data, ic_data)
+            #begin opening websocket
+            print(':::::::::::::::::::OPENING WEBSOCKET')
+            my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
+            #run it asyncronously
+            my_client.run_async()
+            #subscribe to all stocks in the list
+            print(':::::::::::::::::::SUBSCRIBING TO STOCKS IN WEBSOCKET')
+            for ticker in websocket_symbols:
+                my_client.subscribe(ticker)
+            #busy waiting loop that prevents the socket from closing
+            print(':::::::::::::::::::ENTERING BUSY WAITING WHILE DATA IS COLLECTED')
+            timer = True
+            while( timer ):
+                #if its 8:31, then close the loop
+                if(datetime.now().hour >= 8 and datetime.now().minute < 30):
+                    timer = False
+            print(':::::::::::::::::::CALL TO SLEEP, PREVENT WEBSOCKET CLOSING')
+            time.sleep(16000)
+            #sell off
+            print(':::::::::::::::::::CLOSING WEBSOCKET')
+            my_client.close_connection()
+        except:
+            print('error log: Error In Phase 4 ------------------------------------------')
 if __name__ == "__main__":
     #to run this using python main.py, remember to use this commaned in terminal before running: export PYTHONPATH="$PWD/src"
     main()
