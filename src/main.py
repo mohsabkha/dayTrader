@@ -30,7 +30,8 @@ def main():
         print(':::::::::::::::::::START TIME IS', now)
         # check current directory
         dir_path = os.getcwd()
-        path = (dir_path + TICKER_PAGE_PATH)
+        tickerPagePath = os.path.join("polygon_data", "tickers")
+        path = (dir_path + tickerPagePath)
         dir = os.listdir(path)
         # if the path does not have ticker files, get ticker files
         if(len(dir) == 0):
