@@ -53,8 +53,9 @@ def main():
         print(':::::::::::::::::::ENTERING FILTER US STOCKS',
               datetime.now().strftime('%H:%M:%S'))
         symbols = filter_us_stocks(polygon_tickers)
-    except:
+    except Exception as e:
         print('error log: Error In Phase 1 ------------------------------------------')
+        print(e)
 
     # Phase 2 - get data
     try:
@@ -87,8 +88,9 @@ def main():
         recommendation_list = pd.DataFrame(recommendation_list)
         # print date to ensure that correct date is being used
         print(':::::::::::::::::::The following data is being taken from this date: ', END)
-    except:
+    except Exception as e:
         print('error log: Error In Phase 2 ------------------------------------------')
+        print(e)
 
     # Phase 3 - organize filtered data and conduct initial buys
     # sort data by certain values
@@ -139,8 +141,9 @@ def main():
             to_list,
             BUY_LIMIT_SAM)
         ps_sam.run()
-    except:
+    except Exception as e:
         print('error log: Error In Phase 3 ------------------------------------------')
+        print(e)
     # Phase 4 - get live data and feed into strat for experiments 3-5
     try:
         print(':::::::::::::::::::CONDTIONING DATA FOR WEBSOCKET')
@@ -168,8 +171,9 @@ def main():
             if(datetime.now().hour > 10 and datetime.now() < 12):
                 print(':::::::::::::::::::CLOSING WEBSOCKET')
                 my_client.close_connection()
-    except:
+    except Exception as e:
         print('error log: Error In Phase 4 ------------------------------------------')
+        print(e)
 
 
 if __name__ == "__main__":
