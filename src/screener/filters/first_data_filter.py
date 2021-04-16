@@ -10,6 +10,6 @@ def first_data_filter(data):
     print(':::::::::::::::::::FILTERING DATA BASED ON PRICE AND VOLUME')
     first_filter = []
     for x in range(len(data['symbol'])):
-        if((data['close'][x] >= 5) and (data['close'][x] <= 100) and (data['volume'][x] >= 500000) and (data['symbol'][x].find('.') != -1)):
+        if((data['close'][x] >= 5) and (data['close'][x] <= 100) and (data['volume'][x] >= 500000)):
             first_filter.append(data['symbol'][x])
     return first_filter
