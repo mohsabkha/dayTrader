@@ -13,6 +13,7 @@ from alpaca.condition_data import condition_data
 from strategies.strats import strats
 from strategies.strat_list import strat_list
 from alpaca.trade import PurchaseStock
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 import pandas as pd
 import numpy as np
@@ -22,7 +23,7 @@ from polygon import WebSocketClient, STOCKS_CLUSTER
 import os
 
 
-def main():
+def main(jobType):
     # Phase 1 - get tickers
     try:
         # get the current time
@@ -112,7 +113,7 @@ def main():
         del daily_data
         del recommendation_list
         del dir_path
-        del path
+        del tickerPagePath
         del now
         print('\n\n\n:::::::::::::::::::Top Stocks Based On Score')
         print(my_score_list)
@@ -123,59 +124,93 @@ def main():
         # format data for alpaca that will be called in the next phase
         alpaca_top_stocks_array = condition_data(my_score_list)
         # buy all stocks
-        print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 1')
-        ps_gonzalo = PurchaseStock(
-            APCA_API_KEY_ID_GONZALO,
-            APCA_API_SECRET_KEY_GONZALO,
-            APCA_API_BASE_URL_PAPER_GONZALO,
-            alpaca_top_stocks_array,
-            BUY_LIMIT_GONZALO)
-        ps_gonzalo.run()
+        if (jobType == '4am'):
+            print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 1')
+            ps_gonzalo = PurchaseStock(
+                APCA_API_KEY_ID_GONZALO,
+                APCA_API_SECRET_KEY_GONZALO,
+                APCA_API_BASE_URL_PAPER_GONZALO,
+                alpaca_top_stocks_array,
+                BUY_LIMIT_GONZALO)
+            ps_gonzalo.run()
         # buy one stock
-        print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 2')
-        to_list = [alpaca_top_stocks_array[0]]
-        ps_sam = PurchaseStock(
-            APCA_API_KEY_ID_SAM,
-            APCA_API_SECRET_KEY_SAM,
-            APCA_API_BASE_URL_PAPER_SAM,
-            to_list,
-            BUY_LIMIT_SAM)
-        ps_sam.run()
+        if (jobType == '7am'):
+            print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 2')
+            to_list = [alpaca_top_stocks_array[0]]
+            ps_sam = PurchaseStock(
+                APCA_API_KEY_ID_SAM,
+                APCA_API_SECRET_KEY_SAM,
+                APCA_API_BASE_URL_PAPER_SAM,
+                to_list,
+                BUY_LIMIT_SAM)
+            ps_sam.run()
     except Exception as e:
         print('error log: Error In Phase 3 ------------------------------------------')
         print(e)
     # Phase 4 - get live data and feed into strat for experiments 3-5
     try:
-        print(':::::::::::::::::::CONDTIONING DATA FOR WEBSOCKET')
-        stock_score = my_score_list.set_index('Stock')
-        websocket_symbols, websocket_ticker_data, ic_data = strat_list(
-            stock_score)
-        # function to be used by websocket
+        if (jobType == '831am'):
+            print(':::::::::::::::::::CONDTIONING DATA FOR WEBSOCKET')
+            stock_score = my_score_list.set_index('Stock')
+            websocket_symbols, websocket_ticker_data, ic_data = strat_list(
+                stock_score)
+            # function to be used by websocket
 
-        def entry_to_strats(message):
-            strats(message, websocket_ticker_data, ic_data)
-        # begin opening websocket
-        print(':::::::::::::::::::OPENING WEBSOCKET')
-        my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
-        # run it asyncronously
-        my_client.run_async()
-        # subscribe to all stocks in the list
-        print(':::::::::::::::::::SUBSCRIBING TO STOCKS IN WEBSOCKET')
-        for ticker in websocket_symbols:
-            my_client.subscribe(ticker)
-            # busy waiting loop that prevents the socket from closing
-        print(':::::::::::::::::::ENTERING BUSY WAITING WHILE DATA IS COLLECTED')
-        timer = True
-        while(timer):
-            # if 6 < hour < 12
-            if(datetime.now().hour > 10 and datetime.now() < 12):
-                print(':::::::::::::::::::CLOSING WEBSOCKET')
-                my_client.close_connection()
+            def entry_to_strats(message):
+                strats(message, websocket_ticker_data, ic_data)
+            # begin opening websocket
+            print(':::::::::::::::::::OPENING WEBSOCKET')
+            my_client = WebSocketClient(STOCKS_CLUSTER, KEY, entry_to_strats)
+            # run it asyncronously
+            my_client.run_async()
+            # subscribe to all stocks in the list
+            print(':::::::::::::::::::SUBSCRIBING TO STOCKS IN WEBSOCKET')
+            for ticker in websocket_symbols:
+                my_client.subscribe(ticker)
+                # busy waiting loop that prevents the socket from closing
+            print(':::::::::::::::::::ENTERING BUSY WAITING WHILE DATA IS COLLECTED')
+            timer = True
+            while(timer):
+                # if 6 < hour < 12
+                if(datetime.now().hour > 10 and datetime.now() < 12):
+                    print(':::::::::::::::::::CLOSING WEBSOCKET')
+                    my_client.close_connection()
+                    timier = False
     except Exception as e:
         print('error log: Error In Phase 4 ------------------------------------------')
         print(e)
 
 
-if __name__ == "__main__":
-    # to run this using python main.py, remember to use this commaned in terminal before running: export PYTHONPATH="$PWD/src"
-    main()
+# if __name__ == "__main__":
+#     # to run this using python main.py, remember to use this commaned in terminal before running: export PYTHONPATH="$PWD/src"
+#     main()
+
+
+sched = BlockingScheduler()
+
+
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=4)
+def fourAm():
+    print('It is 4 am, I will buy for Gonzalo')
+    main('4am')
+
+
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=7)
+def sevenAm():
+    print('It is 4 am, I will buy for Sam')
+    main('7am')
+
+
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=8, minute=31)
+def eightThirtyOneAm():
+    print('It is 8:31 am, I will buy for Mo')
+    main('831am')
+
+# TODO: Have alpacha sell all stocks at 8:55 am
+# @sched.scheduled_job('cron', day_of_week='mon-fri', hour=8, minute=55)
+# def sellAllStocks():
+#     print("It is 8:55 am, I'll tell alpaca to sell all stocks if it hasn't hit it's price target")
+#     main('831am')
+
+
+sched.start()
