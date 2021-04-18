@@ -15,13 +15,8 @@ This will set your absolute path to be the src folder, and any import statements
 After this, you will have to install all of the packages that are used.
 
 ```
-# run `pip install -r requirements.txt` to install all the packages below
-
-# polygon-api-client supports python version >= 3.6
-pip install polygon-api-client
-pip install -U matplotlib
-
-
+# to install all the packages below run
+pip install -r requirements.txt
 ```
 
 Once the packages are installed, you can run the program from the src directory by running the command in the terminal:
