@@ -189,10 +189,10 @@ def main(jobType):
 sched = BlockingScheduler()
 
 
-# @sched.scheduled_job('cron', day_of_week='mon-fri', hour=4)
-# def fourAm():
-#     print('It is 4 am, I will buy for Gonzalo')
-main('4am')
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=4)
+def fourAm():
+    print('It is 4 am, I will buy for Gonzalo')
+    main('4am')
 
 
 @sched.scheduled_job('cron', day_of_week='mon-fri', hour=7)
