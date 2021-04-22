@@ -11,7 +11,7 @@ POLYGON_TYPES_URL = 'https://api.polygon.io/v2/reference/types?apiKey={}'  # key
 POLYGON_OPEN_CLOSE_URL = 'https://api.polygon.io/v1/open-close/{}/{}?unadjusted=true&apiKey={}'  # ticker,date,key
 POLYGON_AGGS_MINUTE_URL = 'https://api.polygon.io/v2/aggs/ticker/{}/range/1/minute/{}/{}?unadjusted=true&sort=desc&limit=360&apiKey={}'  # ticker,date,date,key
 START = '2021-04-01'
-CLOSING_TIME, END = get_date('2021-04-20')
+CLOSING_TIME, END = get_date('2021-04-23')
 TICKER_PAGE_PATH = '\\polygon_data\\tickers'
 
 # Below is used for alpaca code
