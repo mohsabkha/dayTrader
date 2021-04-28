@@ -1,16 +1,17 @@
-#below is used by polygon and screener code
+# below is used by polygon and screener code
 from screener.retreive_data.get_date import get_date
 KEY = 'wN0pWKqQfTzBAfIOvCWf3v6iZBpr5otL'
 POLYGON_URL = 'https://api.polygon.io'
-POLYGON_TICKER_URL = 'https://api.polygon.io/v2/reference/tickers?page={}&apiKey={}'#page,key
-POLYGON_AGGS_URL = 'https://api.polygon.io/v2/aggs/ticker/{}/range/1/day/{}/{}?unadjusted=true&apiKey={}'#ticker,start,end,key
-POLYGON_DIV_URL = 'https://api.polygon.io/v2/reference/dividends/{}?apiKey={}'#ticker,key
-POLYGON_SPLIT_URL = 'https://api.polygon.io/v2/reference/splits/{}?apiKey={}'#ticker,key
-POLYGON_TYPES_URL = 'https://api.polygon.io/v2/reference/types?apiKey={}'#key
-POLYGON_OPEN_CLOSE_URL = 'https://api.polygon.io/v1/open-close/{}/{}?unadjusted=true&apiKey={}'#ticker,date,key
-POLYGON_AGGS_MINUTE_URL = 'https://api.polygon.io/v2/aggs/ticker/{}/range/1/minute/{}/{}?unadjusted=true&sort=desc&limit=360&apiKey={}'#ticker,date,date,key
+POLYGON_TICKER_URL = 'https://api.polygon.io/v2/reference/tickers?page={}&apiKey={}'  # page,key
+# ticker,start,end,key
+POLYGON_AGGS_URL = 'https://api.polygon.io/v2/aggs/ticker/{}/range/1/day/{}/{}?unadjusted=true&apiKey={}'
+POLYGON_DIV_URL = 'https://api.polygon.io/v2/reference/dividends/{}?apiKey={}'  # ticker,key
+POLYGON_SPLIT_URL = 'https://api.polygon.io/v2/reference/splits/{}?apiKey={}'  # ticker,key
+POLYGON_TYPES_URL = 'https://api.polygon.io/v2/reference/types?apiKey={}'  # key
+POLYGON_OPEN_CLOSE_URL = 'https://api.polygon.io/v1/open-close/{}/{}?unadjusted=true&apiKey={}'  # ticker,date,key
+POLYGON_AGGS_MINUTE_URL = 'https://api.polygon.io/v2/aggs/ticker/{}/range/1/minute/{}/{}?unadjusted=true&sort=desc&limit=360&apiKey={}'  # ticker,date,date,key
 START = '2021-04-01'
-CLOSING_TIME, END = get_date('2021-04-13')
+CLOSING_TIME, END = get_date('2021-04-23')
 TICKER_PAGE_PATH = '\\polygon_data\\tickers'
 
 # Below is used for alpaca code
@@ -51,48 +52,45 @@ APCA_API_KEY_ID = "your key here"
 APCA_API_SECRET_KEY = "your key here"
 APCA_API_BASE_URL_PAPER = "https://paper-api.alpaca.markets"
 
-#this is an alternative to the other code
+# this is an alternative to the other code
 ACCOUNTS = {
-    'alpaca_base_url' : 'https://api.alpaca.markets',
-    'alpaca_paper_url' : 'https://paper-api.alpaca.markets',
-    'account':[
+    'alpaca_base_url': 'https://api.alpaca.markets',
+    'alpaca_paper_url': 'https://paper-api.alpaca.markets',
+    'account': [
         {
             'first_name': 'GONZALO',
             'last_name': 'PANTOJA',
             'api_key': 'PKQRKQYQTE7RG9QQLCGQ',
             'secret_key': 'iUTMGWS5ZuQVybsB8WrE74AEdpeUyt5qqh1BnThl',
-            'buy_power' : '25000'
+            'buy_power': '25000'
         },
         {
             'first_name': 'MOHAMMAD',
             'last_name': 'KHAN',
             'api_key': 'PKM6MR6GJO5BAZ1H99J0',
             'secret_key': 'tkYetTY8oZEZoCHv66QfOmMFI4lG6N731wQX13j7',
-            'buy_power' : '25000'
+            'buy_power': '25000'
         },
         {
             'first_name': 'JAAFER',
             'last_name': 'MONSOUR',
             'api_key': 'PKVAAXXOYV4JY2ASJKNV',
             'secret_key': 'tpvLSxGtLlIshudqxChLY2gfQfd98OQ8yYwJalcY',
-            'buy_power' : '25000'
+            'buy_power': '25000'
         },
         {
             'first_name': 'SAMEER',
             'last_name': 'TARIQ',
             'api_key': 'PKGBHOSGRBVHGP7L8M4R',
             'secret_key': 'VCSyNX2kofcRsQC25RV95sH6QtuZrtrvWJwuzDVI',
-            'buy_power' : '25000'
+            'buy_power': '25000'
         },
         {
             'first_name': 'MURAAD',
             'last_name': 'KHAN',
             'api_key': '',
             'secret_key': '',
-            'buy_power' : '25000'
+            'buy_power': '25000'
         }
     ]
 }
-
-
-

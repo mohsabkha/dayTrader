@@ -1,0 +1,1 @@
+worker: mkdir -p src/polygon_data/tickers && cd src && python main.py

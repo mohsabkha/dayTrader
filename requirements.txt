@@ -1,4 +1,6 @@
-polygon-api-client
+requests
+pandas
 matplotlib
+polygon-api-client
 alpaca-trade-api
-
+apscheduler
