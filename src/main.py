@@ -138,9 +138,9 @@ def main(jobType):
             print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 2')
             to_list = [alpaca_top_stocks_array[0]]
             ps_sam = PurchaseStock(
-                APCA_API_KEY_ID_SAM,
-                APCA_API_SECRET_KEY_SAM,
-                APCA_API_BASE_URL_PAPER_SAM,
+                APCA_API_KEY_ID_MO,
+                APCA_API_SECRET_KEY_MO,
+                APCA_API_BASE_URL_PAPER_MO,
                 to_list,
                 BUY_LIMIT_SAM)
             ps_sam.run()
@@ -192,12 +192,11 @@ sched = BlockingScheduler()
 @sched.scheduled_job('cron', day_of_week='mon-fri', hour=4)
 def fourAm():
     print('It is 4 am, I will buy for Gonzalo')
-    main('4am')
 
 
 @sched.scheduled_job('cron', day_of_week='mon-fri', hour=7)
 def sevenAm():
-    print('It is 4 am, I will buy for Sam')
+    print('It is 4 am, I will buy for Mo')
     main('7am')
 
 

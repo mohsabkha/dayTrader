@@ -11,13 +11,13 @@ POLYGON_TYPES_URL = 'https://api.polygon.io/v2/reference/types?apiKey={}'  # key
 POLYGON_OPEN_CLOSE_URL = 'https://api.polygon.io/v1/open-close/{}/{}?unadjusted=true&apiKey={}'  # ticker,date,key
 POLYGON_AGGS_MINUTE_URL = 'https://api.polygon.io/v2/aggs/ticker/{}/range/1/minute/{}/{}?unadjusted=true&sort=desc&limit=360&apiKey={}'  # ticker,date,date,key
 START = '2021-04-01'
-CLOSING_TIME, END = get_date('2021-04-23')
+CLOSING_TIME, END = get_date('2021-04-27')
 TICKER_PAGE_PATH = '\\polygon_data\\tickers'
 
 # Below is used for alpaca code
 # Gonzalo
-APCA_API_KEY_ID_GONZALO = "PKQRKQYQTE7RG9QQLCGQ"
-APCA_API_SECRET_KEY_GONZALO = "iUTMGWS5ZuQVybsB8WrE74AEdpeUyt5qqh1BnThl"
+APCA_API_KEY_ID_GONZALO = "PKM1HIRAFVH6F6565MDT"
+APCA_API_SECRET_KEY_GONZALO = "ir6R6VNfQ2TcMUUqT1odEXb6r51svw59z4628RUN"
 APCA_API_BASE_URL_PAPER_GONZALO = "https://paper-api.alpaca.markets"
 BUY_LIMIT_GONZALO = '25000'
 BOUGHT_GONZALO = False
@@ -40,8 +40,8 @@ APCA_API_BASE_URL_PAPER_SAM = "https://paper-api.alpaca.markets"
 BUY_LIMIT_SAM = '25000'
 BOUGHT_SAM = False
 # Mohammad - 1 trade based on all strats
-APCA_API_KEY_ID_MO = "PKM6MR6GJO5BAZ1H99J0"
-APCA_API_SECRET_KEY_MO = "tkYetTY8oZEZoCHv66QfOmMFI4lG6N731wQX13j7"
+APCA_API_KEY_ID_MO = "PKXHX8G3NROK5FYM9OZ1"
+APCA_API_SECRET_KEY_MO = "3V1oDID8XoF62FBCDSUF39jSX0dutojUrvwdvueB"
 APCA_API_BASE_URL_PAPER_MO = "https://paper-api.alpaca.markets"
 BUY_LIMIT_MO = '25000'
 BOUGHT_MO = False
