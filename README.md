@@ -11,6 +11,8 @@ cd dayTrader/src
 export PYTHONPATH="$PWD"
 ```
 
+set the end date to the previous day. So if you wanna buy at market open on 4/20, then set the end date to 4/19 so it gets the previous days data
+
 This will set your absolute path to be the src folder, and any import statements will be able to use this path to properly import
 After this, you will have to install all of the packages that are used.
 
