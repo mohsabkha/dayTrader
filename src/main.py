@@ -124,7 +124,7 @@ def main(jobType):
         # format data for alpaca that will be called in the next phase
         alpaca_top_stocks_array = condition_data(my_score_list)
         # buy all stocks
-        if (jobType == '4am'):
+        if (jobType == '7am'):
             print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 1')
             ps_gonzalo = PurchaseStock(
                 APCA_API_KEY_ID_GONZALO,
@@ -194,7 +194,7 @@ def fourAm():
     print('It is 4 am, I will buy for Gonzalo')
 
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=7)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=7, minute=10)
 def sevenAm():
     print('It is 4 am, I will buy for Mo')
     main('7am')
