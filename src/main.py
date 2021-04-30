@@ -124,7 +124,7 @@ def main(jobType):
         # format data for alpaca that will be called in the next phase
         alpaca_top_stocks_array = condition_data(my_score_list)
         # buy all stocks
-        if (jobType == '7am'):
+        if (jobType == '4am'):
             print(':::::::::::::::::::BUYING STOCKS FOR EXPERIMENT 1')
             ps_gonzalo = PurchaseStock(
                 APCA_API_KEY_ID_GONZALO,
@@ -189,27 +189,21 @@ def main(jobType):
 sched = BlockingScheduler()
 
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=9, minute=22)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=9, )
 def fourAm():
-    print('It is 4 am, I will buy for Gonzalo')
-    main('7am')
+    print('It is 4 am CST, I will buy for Gonzalo')
+    main('4am')
 
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=7, minute=22)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=12)
 def sevenAm():
-    print('It is 4 am, I will buy for Mo')
+    print('It is 7 am CST, I will buy for Mo')
     main('7am')
 
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=12, minute=22)
-def sevenAm():
-    print('It is 4 am, I will buy for 12 am')
-    main('7am')
-
-
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=8, minute=31)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=13, minute=31)
 def eightThirtyOneAm():
-    print('It is 8:31 am, I will buy for Mo')
+    print('It is 8:31 am CST, I will buy for Mo')
     main('831am')
 
 # TODO: Have alpacha sell all stocks at 8:55 am
